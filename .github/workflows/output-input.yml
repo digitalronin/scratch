@@ -1,0 +1,16 @@
+name: Passing output to input
+on:
+  workflow_dispatch:
+
+jobs:
+  output-to-input:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "::set-output name=message::$(date)"
+        id: mystep
+      - run: |
+          echo "Hello"
+          echo "message is: ${MSG}"
+        env:
+          MSG: ${{steps.mystep.outputs.message}}
